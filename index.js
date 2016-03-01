@@ -10,7 +10,7 @@ var JSON = require('./lib/json-buffer');
 Function('', fs.readFileSync(require.resolve('./lib/worker.js'), 'utf8'));
 
 module.exports = doRequest;
-function doRequest(method, url, options) {
+function doRequest(method, url, options, envOptions) {
   if (!spawnSync) {
     throw new Error(
       'Sync-request requires node version 0.12 or later.  If you need to use it with an older version of node\n' +
@@ -22,7 +22,9 @@ function doRequest(method, url, options) {
     url: url,
     options: options
   });
-  var res = spawnSync(process.execPath, [require.resolve('./lib/worker.js')], {input: req});
+  envOptions = envOptions || {};
+  envOptions.input = req;
+  var res = spawnSync(process.execPath, [require.resolve('./lib/worker.js')], envOptions);
   if (res.status !== 0) {
     throw new Error(res.stderr.toString());
   }
