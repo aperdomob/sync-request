@@ -1,5 +1,5 @@
 {
-  "name": "sync-request",
+  "name": "sync-request-proxy",
   "version": "3.0.0",
   "description": "Make synchronous web requests",
   "browser": "./browser.js",
